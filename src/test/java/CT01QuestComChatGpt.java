@@ -1,32 +1,27 @@
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.util.Random;
+
 import java.security.SecureRandom;
 
-
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Duration;
-
 import static java.lang.Thread.sleep;
 
-public class CT01ResponderOnline {
+public class CT01QuestComChatGpt {
     BufferedReader buffer;
     StringBuilder json;
     String linha;
@@ -74,8 +69,6 @@ public class CT01ResponderOnline {
         String urlPlataforma = jsonObject.get("url").getAsString();
         String usuario = jsonObject.get("usuario").getAsString();
         String senha = jsonObject.get("senha").getAsString();
-        String questionario;
-        //gerarStringAleatoria();
 
         // Abrir a plataforma
         navegador.get(urlPlataforma);
@@ -90,99 +83,82 @@ public class CT01ResponderOnline {
         // Clica no botão de login
         navegador.findElement(By.name("btn_entrar")).click();
 
+        //TESTE CHATGPT
+
+        //chega no menu com chatgpt
         espera.until(d -> navegador.findElement(By.xpath("//*[@id=\"side-menu\"]/li[2]/a")));
         navegador.findElement(By.xpath("//*[@id=\"side-menu\"]/li[2]/a")).click();
 
-        //limpa o campo quest
-        sleep(2000);
-        for (int i = 0; i < 10; i++) {
-            actions.sendKeys(Keys.TAB).perform();
-        }
-
-        sleep(2000);
-        for (int i = 0; i < 20; i++) {
-            actions.sendKeys(Keys.BACK_SPACE).perform();
-        }
-
-
-        //questionario nome
+        //chega no campo questionario
+        espera.until(d -> navegador.findElement(By.name("questionario")));
+        navegador.findElement(By.name("questionario")).click();
+        //poe o nome no questionario
+        navegador.findElement((By.name("questionario"))).clear();
         espera.until(d -> navegador.findElement(By.name("questionario")));
         navegador.findElement(By.name("questionario")).sendKeys("questionario");
 
+        // vai para o campo das perguntas
         sleep(2000);
-        for (int i = 0; i < 1; i++) {
-            actions.sendKeys(Keys.TAB).perform();
-        }
+        actions.sendKeys(Keys.TAB).perform();
 
         //quantidade de perguntas
         espera.until(d -> navegador.findElement(By.name("qtdPerguntas")));
         navegador.findElement((By.name("qtdPerguntas"))).sendKeys("4");
 
-        sleep(2000);
-        for (int i = 0; i < 2; i++) {
-            actions.sendKeys(Keys.TAB).perform();
-        }
-        navegador.findElement((By.name("tema"))).clear();
-        //tema
-        espera.until(d -> navegador.findElement(By.name("tema")));
-        navegador.findElement((By.name("tema"))).sendKeys("Futebol");
+        //vai para o quantidade de alternaticas
+        actions.sendKeys(Keys.TAB).perform();
+        navegador.findElement((By.name("qtdAlternativas"))).clear();
+        espera.until(d -> navegador.findElement(By.name("qtdAlternativas")));
+        navegador.findElement((By.name("qtdAlternativas"))).sendKeys("2");
 
-        sleep(500);
+        //chega no campo tema e limpa ele
+        actions.sendKeys(Keys.TAB).perform();
+        navegador.findElement((By.name("tema"))).clear();
+        espera.until(d -> navegador.findElement(By.name("tema")));
+        navegador.findElement((By.name("tema"))).sendKeys("Futebol"); //tema
+
         //elaborar perguntas
+        sleep(500);
         espera.until(d -> navegador.findElement(By.name("btn_elabore_perguntas")));
         navegador.findElement(By.name("btn_elabore_perguntas")).click();
 
-        sleep(10000);
         //proximo
+        sleep(5000);
         espera.until(d -> navegador.findElement(By.name("btn_próximo")));
         navegador.findElement(By.name("btn_próximo")).click();
 
         //disciplina
         espera.until(d -> navegador.findElement(By.name("disciplina")));
         navegador.findElement(By.name("disciplina")).click();
-        //sincrona
-        sleep(1000);
-        actions.sendKeys(Keys.ARROW_DOWN);
+        sleep(100);
+        actions.sendKeys("R").perform();
         sleep(100);
         actions.sendKeys(Keys.ENTER);
 
+        //resposta
         espera.until(d -> navegador.findElement(By.name("comunicacao")));
         navegador.findElement(By.name("comunicacao")).click();
         sleep(1000);
-        actions.sendKeys(Keys.ARROW_DOWN);
+        actions.sendKeys("S").perform();
         sleep(100);
         actions.sendKeys(Keys.ENTER);
 
-        espera.until(d -> navegador.findElement(By.name("comunicacao")));
-        navegador.findElement(By.name("comunicacao")).click();
-
-        //escolhas 1
+        //escolhas 1a
         espera.until(d -> navegador.findElement(By.name("radio1")));
         navegador.findElement(By.name("radio1")).click();
-        //2
+        //2a
         espera.until(d -> navegador.findElement(By.name("radio2")));
         navegador.findElement(By.name("radio2")).click();
-        //3
+        //3a
         espera.until(d -> navegador.findElement(By.name("radio3")));
         navegador.findElement(By.name("radio3")).click();
-        //4
+        //4b
         espera.until(d -> navegador.findElement(By.name("radio4")));
         navegador.findElement(By.name("radio4")).click();
-/*
-        public static void gerarStringAleatoria() {
-            int comprimento = 8;
-            String resultado = "";
-            String CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-            for (int i = 0; i < comprimento; i++) {
-                int indice = RANDOM.nextInt(CARACTERES.length());
-                resultado += CARACTERES.charAt(indice);
-            }
-
-            int numeroAleatorio = RANDOM.nextInt(10000);
-
-            String resultadoFinal = resultado + numeroAleatorio;
-
- */
-        }
+        //confirma o questionario
+        sleep(1000);
+        espera.until(d -> navegador.findElement(By.name("btn_confirma")));
+        navegador.findElement(By.name("btn_confirma")).click();
     }
+}
