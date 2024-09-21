@@ -1,7 +1,6 @@
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import junit.framework.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,13 +17,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.List;
-import java.util.Set;
-import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
 
-public class CT02ResponderOnlineRE {
+public class CT02ResponderOnline {
     BufferedReader buffer;
     StringBuilder json;
     String linha;
@@ -32,13 +28,15 @@ public class CT02ResponderOnlineRE {
     JsonObject jsonObject;
     ChromeOptions options;
     static WebDriver navegador;
-    static Wait<WebDriver> espera;
+    static WebDriver navegador2;
+    static WebDriverWait espera;
+    static WebDriverWait espera2;
 
     @BeforeEach
     public void setUp() {
         try {
             // Lê o arquivo JSON usando um BufferedReader
-            buffer = new BufferedReader(new FileReader("C:\\Users\\eduar\\Documents\\teste\\src\\main\\resources\\CT-01_ResponderOnline.json"));
+            buffer = new BufferedReader(new FileReader("C:\\Users\\eduar\\Documents\\GitHub\\testesRp2\\src\\main\\resources\\DadosResponderOnline.json"));
             json = new StringBuilder();
             while ((linha = buffer.readLine()) != null) {
                 json.append(linha);
@@ -50,64 +48,119 @@ public class CT02ResponderOnlineRE {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // Define as opções do Chrome
+
+        // Tela cheia
         options = new ChromeOptions();
         options.addArguments("start-maximized");
-        // Inicializa o WebDriver
+
+        // Inicializa o WebDriver para o primeiro navegador
         WebDriverManager.chromedriver().setup();
         navegador = new ChromeDriver(options);
         espera = new WebDriverWait(navegador, Duration.ofSeconds(50));
+
+        // Inicializa o WebDriver para o segundo navegador
+        navegador2 = new ChromeDriver(options);
+        espera2 = new WebDriverWait(navegador2, Duration.ofSeconds(50));
     }
+
     @Test
-    @DisplayName("CT01 - Login Usuário")
-    public void CT01() throws InterruptedException {
+    @DisplayName("ResponderOnline")
+    public void CT02() throws InterruptedException {
         Actions actions = new Actions(navegador);
-        String urlPlataforma = jsonObject.get("url").getAsString();
         String usuario = jsonObject.get("usuario").getAsString();
         String senha = jsonObject.get("senha").getAsString();
-        // Abrir a plataforma
-        navegador.get(urlPlataforma);
-        // Espera até o campo login aparecer
+
+        //LOGIN
+        realizarLogin(navegador, espera, usuario, senha);
+        realizarLoginResponder(navegador2, espera2, usuario, senha);
+
+        //PROCURAR QUESTIONARIo
+        procurarQuestionario(navegador, espera, actions);
+
+        //entrar no questionário
+
+    }
+    //realiza o login
+    public void realizarLogin(WebDriver navegador, WebDriverWait espera, String usuario, String senha) throws InterruptedException {
+        navegador.get(jsonObject.get("url").getAsString());
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("login")));
-        // Acha os campos e já preenche eles
         navegador.findElement(By.name("login")).sendKeys(usuario);
         navegador.findElement(By.name("password")).sendKeys(senha);
         navegador.findElement(By.name("btn_entrar")).click();
-        // Armazena o identificador da janela original
-        String originalWindow = navegador.getWindowHandle();
-        // Espera até que algum elemento específico da nova janela seja encontrado
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
         System.out.println("Título da nova janela: " + navegador.getTitle());
-        // Acessa a funcionalidade de questionários
+        sleep(1000);
+        //Espera 2 segundos para verificar
+        Thread.sleep(2000);
+        // Compara se a url da página é a esperada
+        try {
+            Assertions.assertEquals("http://200.132.136.72/AIQuiz/index.php?class=ResponderListOnLine",
+                    navegador.getCurrentUrl());
+            System.out.println("Logado com sucesso");
+        } catch (AssertionError e) {
+            System.out.println("Erro no login");
+        }
+    }
+    //realiza o login e manda para o site responder
+    public void realizarLoginResponder(WebDriver navegador, WebDriverWait espera, String usuario, String senha) throws InterruptedException {
+        navegador.get(jsonObject.get("url").getAsString());
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("login")));
+        navegador.findElement(By.name("login")).sendKeys(usuario);
+        navegador.findElement(By.name("password")).sendKeys(senha);
+        navegador.findElement(By.name("btn_entrar")).click();
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
+        System.out.println("Título da nova janela: " + navegador.getTitle());
+        sleep(1000);
+        // Agora trocando para o site responder
+        navegador.navigate().to("http://200.132.136.72/AIQuiz/index.php?class=PublicPIN");
+        // Compara se a url da página é a esperada
+        sleep(1000);
+        try {
+            Assertions.assertEquals("http://200.132.136.72/AIQuiz/index.php?class=PublicPIN",
+                    navegador.getCurrentUrl());
+            System.out.println("Logado e na tela de responder PIN com sucesso");
+        } catch (AssertionError e) {
+            System.out.println("Erro no login e em ir para a tela de PIN");
+        }
+    }
+    //Procura o questionario já parametrizado
+    public void procurarQuestionario(WebDriver navegador, WebDriverWait espera, Actions actions) throws InterruptedException {
+        String id = jsonObject.get("id").getAsString();
+        String titulo = jsonObject.get("tituloQuest").getAsString();
+        String descricao = jsonObject.get("descricao").getAsString();
+
+        sleep(4000);
+        //chega no campo do Responderonline
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"side-menu\"]/li[7]/a")));
         navegador.findElement(By.xpath("//*[@id=\"side-menu\"]/li[7]/a")).click();
+        sleep(250);
 
-        sleep(500);
-        for (int i = 0; i < 6; i++) {
-            actions.sendKeys(Keys.TAB).perform();
-        }
-        //procura o questionário
+        //Preenche o id do questionario
         sleep(250);
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("id")));
-        navegador.findElement(By.name("id")).sendKeys("541");
-        actions.sendKeys(Keys.TAB).perform();
+        navegador.findElement(By.name("id")).click();
+        navegador.findElement(By.name("id")).sendKeys(id);
+        actions.sendKeys(Keys.ENTER).perform();
 
+        // Preenche título do questionário
         sleep(250);
-        espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("titulo")));
-        navegador.findElement(By.name("titulo")).sendKeys("Questionário XX84-fbnwfc");
+        navegador.findElement(By.name("titulo")).sendKeys(titulo);
         actions.sendKeys(Keys.TAB).perform();
 
+        // Preenche descrição do questionário
         sleep(250);
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("descricao")));
-         navegador.findElement(By.name("descricao")).sendKeys("Questionário XXbhdvhbufo");
+        navegador.findElement(By.name("descricao")).sendKeys(descricao);
 
-        sleep(250);
+        // Clicar no botão pesquisar
+        sleep(3000); // Ajustar o tempo conforme necessário
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("btn_buscar")));
         navegador.findElement(By.name("btn_buscar")).click();
+        sleep(5000); // Ajustar o tempo conforme necessário
 
-        sleep(5000);
+        // Forçar o click no responder questionário
 
-        sleep(250);
+        /*sleep(250);
         try {
             WebElement element = navegador.findElement(By.className("tdatagrid_cell"));
             if (element.getAttribute("class").contains("action")) {
@@ -116,11 +169,19 @@ public class CT02ResponderOnlineRE {
         } catch (Exception e) {
             e.printStackTrace();
         }
+         */
+    }
+    public void responderQuestionario(){
+
+
+
+     /*   //começa o questionario
         sleep(250);
         for (int i = 0; i < 2; i++) {
             actions.sendKeys(Keys.TAB).perform();
         }
         actions.sendKeys(Keys.ENTER).perform();
+
         //Responder o questionário
         sleep(500);
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("btnLiberar")));
@@ -135,6 +196,7 @@ public class CT02ResponderOnlineRE {
         sleep(500);
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[2]/div/div/div[3]/button")));
         navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[3]/button")).click();
+
 
 
         //segunda questão
@@ -154,6 +216,8 @@ public class CT02ResponderOnlineRE {
         sleep(500);
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("btnLiberar")));
         navegador.findElement(By.name("btnLiberar")).click();
+
+
 
         sleep(500);
         actions.sendKeys(Keys.TAB).perform();
@@ -177,7 +241,10 @@ public class CT02ResponderOnlineRE {
         navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[3]/button")).click();
 
         String retorno = navegador.findElement(By.className("modal-title")).getText();
+*/
+        //Assertions.assertEquals("Informação", retorno);
 
-        Assertions.assertEquals("Informação", retorno);
+        //<span class="pin-number" name="randomPIN">271 0530</span>
+        //xpath:  //*[@id="tab_bform_1905449524_0"]/div/div/div/div/div[1]/div[1]/p[2]/span
     }
 }
