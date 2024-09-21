@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.time.Duration;
 import static java.lang.Thread.sleep;
 
-public class CT01QuestComChatGpt {
+public class CT01_5NaoElaborarPerguntas {
     BufferedReader buffer;
     StringBuilder json;
     String linha;
@@ -68,12 +68,16 @@ public class CT01QuestComChatGpt {
         String qtdPerguntas = jsonObject.get("qtdPerguntas").getAsString();
         String qtdAlternativas = jsonObject.get("qtdAlternativas").getAsString();
         String tema = jsonObject.get("tema").getAsString();
+        String disciplina = jsonObject.get("disciplina").getAsString();
+        String resposta = jsonObject.get("resposta").getAsString();
 
         // Logar no site e chegar no menu chatGPT
         realizarLogin(navegador, espera, usuario, senha);
         //criar questionario com gpt
         criarQuestionario(navegador, espera, actions, nomeQuest, qtdPerguntas, qtdAlternativas, tema);
+        //responder as questionario
     }
+
     public void realizarLogin(WebDriver navegador, WebDriverWait espera, String usuario, String senha) throws InterruptedException {
         navegador.get(jsonObject.get("url").getAsString());
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("login")));
@@ -128,11 +132,6 @@ public class CT01QuestComChatGpt {
         espera.until(d -> navegador.findElement(By.name("tema")));
         navegador.findElement((By.name("tema"))).sendKeys(tema);
 
-        //elaborar perguntas
-        sleep(500);
-        espera.until(d -> navegador.findElement(By.name("btn_elabore_perguntas")));
-        navegador.findElement(By.name("btn_elabore_perguntas")).click();
-
         //proximo
         sleep(4000);
         espera.until(d -> navegador.findElement(By.name("btn_próximo")));
@@ -145,7 +144,7 @@ public class CT01QuestComChatGpt {
                     navegador.getCurrentUrl());
             System.out.println("Quiz criado da forma correta");
         } catch (AssertionError e) {
-            System.out.println("Erro na criação do quiz");
+            System.out.println("Erro na criação do quiz, não elaborou as questoes");
         }
     }
 }

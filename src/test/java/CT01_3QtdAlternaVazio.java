@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.time.Duration;
 import static java.lang.Thread.sleep;
 
-public class CT01QuestComChatGpt {
+public class CT01_3QtdAlternaVazio {
     BufferedReader buffer;
     StringBuilder json;
     String linha;
@@ -32,7 +32,7 @@ public class CT01QuestComChatGpt {
     public void setUp() {
         try {
             // Lê o arquivo JSON usando um BufferedReader
-            buffer = new BufferedReader(new FileReader("C:\\Users\\eduar\\Documents\\GitHub\\testesRp2\\src\\main\\resources\\DadosQuestComChatGpt.json"));
+            buffer = new BufferedReader(new FileReader("C:\\Users\\eduar\\Documents\\GitHub\\testesRp2\\src\\main\\resources\\CT01_3.json"));
             json = new StringBuilder();
             while ((linha = buffer.readLine()) != null) {
                 json.append(linha);
@@ -65,14 +65,19 @@ public class CT01QuestComChatGpt {
         String usuario = jsonObject.get("usuario").getAsString();
         String senha = jsonObject.get("senha").getAsString();
         String nomeQuest = jsonObject.get("nomeQuest").getAsString();
-        String qtdPerguntas = jsonObject.get("qtdPerguntas").getAsString();
+        String qtdPerguntas  = jsonObject.get("qtdPerguntas").getAsString();
         String qtdAlternativas = jsonObject.get("qtdAlternativas").getAsString();
         String tema = jsonObject.get("tema").getAsString();
+        String disciplina = jsonObject.get("disciplina").getAsString();
+        String resposta = jsonObject.get("resposta").getAsString();
 
         // Logar no site e chegar no menu chatGPT
         realizarLogin(navegador, espera, usuario, senha);
         //criar questionario com gpt
         criarQuestionario(navegador, espera, actions, nomeQuest, qtdPerguntas, qtdAlternativas, tema);
+        //responder as questionario
+        responderQuestionario(navegador, espera, actions, disciplina, resposta);
+
     }
     public void realizarLogin(WebDriver navegador, WebDriverWait espera, String usuario, String senha) throws InterruptedException {
         navegador.get(jsonObject.get("url").getAsString());
@@ -97,7 +102,6 @@ public class CT01QuestComChatGpt {
             System.out.println("Erro no login");
         }
     }
-
     public void criarQuestionario(WebDriver navegador, WebDriverWait espera, Actions actions, String nomeQuest, String qtdPerguntas
             , String qtdAlternativas, String tema) throws InterruptedException {
         espera.until(d -> navegador.findElement(By.name("questionario")));
@@ -146,6 +150,48 @@ public class CT01QuestComChatGpt {
             System.out.println("Quiz criado da forma correta");
         } catch (AssertionError e) {
             System.out.println("Erro na criação do quiz");
+        }
+    }
+    public void responderQuestionario(WebDriver navegador, WebDriverWait espera, Actions actions, String disciplina, String resposta) throws InterruptedException {
+        //disciplina
+        espera.until(d -> navegador.findElement(By.name("disciplina")));
+        navegador.findElement(By.name("disciplina")).click();
+        sleep(100);
+        actions.sendKeys(disciplina).perform();
+        sleep(100);
+        actions.sendKeys(Keys.ENTER);
+
+        //resposta
+        espera.until(d -> navegador.findElement(By.name("comunicacao")));
+        navegador.findElement(By.name("comunicacao")).click();
+        sleep(1000);
+        actions.sendKeys(resposta).perform();
+        sleep(100);
+        actions.sendKeys(Keys.ENTER);
+
+        //escolhas 1a
+        espera.until(d -> navegador.findElement(By.name("radio1")));
+        navegador.findElement(By.name("radio1")).click();
+        //2a
+        espera.until(d -> navegador.findElement(By.name("radio2")));
+        navegador.findElement(By.name("radio2")).click();
+        //3a
+        espera.until(d -> navegador.findElement(By.name("radio3")));
+        navegador.findElement(By.name("radio3")).click();
+        //4b
+        espera.until(d -> navegador.findElement(By.name("radio4")));
+        navegador.findElement(By.name("radio4")).click();
+
+        //confirma o questionario
+        sleep(1000);
+        espera.until(d -> navegador.findElement(By.name("btn_confirma")));
+        navegador.findElement(By.name("btn_confirma")).click();
+        try {
+            WebElement elementoEsperado = espera.until(d -> navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[1]/h4")));
+            Assertions.assertNotNull(elementoEsperado);
+            System.out.println("Quiz confirmado da forma correta");
+        } catch (AssertionError e) {
+            System.out.println("Erro na confirmação do quiz, quantidade de alternativas vazio");
         }
     }
 }

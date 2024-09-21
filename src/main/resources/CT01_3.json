@@ -4,7 +4,7 @@
   "senha": "admin",
   "nomeQuest": "questionario12430",
   "qtdPerguntas": 4,
-  "qtdAlternativas": 1,
+  "qtdAlternativas": " ",
   "tema": "Futebol",
   "disciplina": "R",
   "resposta": "S"

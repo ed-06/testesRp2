@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.time.Duration;
 import static java.lang.Thread.sleep;
 
-public class CT01QuestComChatGpt {
+public class CT01_2QtdRespostasVazio {
     BufferedReader buffer;
     StringBuilder json;
     String linha;
@@ -32,7 +32,7 @@ public class CT01QuestComChatGpt {
     public void setUp() {
         try {
             // Lê o arquivo JSON usando um BufferedReader
-            buffer = new BufferedReader(new FileReader("C:\\Users\\eduar\\Documents\\GitHub\\testesRp2\\src\\main\\resources\\DadosQuestComChatGpt.json"));
+            buffer = new BufferedReader(new FileReader("C:\\Users\\eduar\\Documents\\GitHub\\testesRp2\\src\\main\\resources\\CT01_2.json"));
             json = new StringBuilder();
             while ((linha = buffer.readLine()) != null) {
                 json.append(linha);
@@ -68,12 +68,15 @@ public class CT01QuestComChatGpt {
         String qtdPerguntas = jsonObject.get("qtdPerguntas").getAsString();
         String qtdAlternativas = jsonObject.get("qtdAlternativas").getAsString();
         String tema = jsonObject.get("tema").getAsString();
+        String disciplina = jsonObject.get("disciplina").getAsString();
+        String resposta = jsonObject.get("resposta").getAsString();
 
         // Logar no site e chegar no menu chatGPT
         realizarLogin(navegador, espera, usuario, senha);
         //criar questionario com gpt
         criarQuestionario(navegador, espera, actions, nomeQuest, qtdPerguntas, qtdAlternativas, tema);
     }
+
     public void realizarLogin(WebDriver navegador, WebDriverWait espera, String usuario, String senha) throws InterruptedException {
         navegador.get(jsonObject.get("url").getAsString());
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("login")));
@@ -145,7 +148,7 @@ public class CT01QuestComChatGpt {
                     navegador.getCurrentUrl());
             System.out.println("Quiz criado da forma correta");
         } catch (AssertionError e) {
-            System.out.println("Erro na criação do quiz");
+            System.out.println("Erro na criação do quiz, quantidade de respostas vazio");
         }
     }
 }

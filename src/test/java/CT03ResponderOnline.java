@@ -10,7 +10,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.BufferedReader;
@@ -20,7 +19,7 @@ import java.time.Duration;
 
 import static java.lang.Thread.sleep;
 
-public class CT02ResponderOnline {
+public class CT03ResponderOnline {
     BufferedReader buffer;
     StringBuilder json;
     String linha;
@@ -69,13 +68,16 @@ public class CT02ResponderOnline {
         Actions actions = new Actions(navegador);
         String usuario = jsonObject.get("usuario").getAsString();
         String senha = jsonObject.get("senha").getAsString();
+        String tituloQuest = jsonObject.get("tituloQuest").getAsString();
+        String id = jsonObject.get("id").getAsString();
+        String descricaoQuest = jsonObject.get("descricaoQuest").getAsString();
 
         //LOGIN
         realizarLogin(navegador, espera, usuario, senha);
         realizarLoginResponder(navegador2, espera2, usuario, senha);
 
         //PROCURAR QUESTIONARIo
-        procurarQuestionario(navegador, espera, actions);
+        procurarQuestionario(navegador, espera, actions, tituloQuest, id, descricaoQuest);
 
         //entrar no questionário
 
@@ -94,7 +96,7 @@ public class CT02ResponderOnline {
         Thread.sleep(2000);
         // Compara se a url da página é a esperada
         try {
-            Assertions.assertEquals("http://200.132.136.72/AIQuiz/index.php?class=ResponderListOnLine",
+            Assertions.assertEquals("http://200.132.136.72/AIQuiz/index.php?class=ResponderListOnLine&previous_class=LoginForm",
                     navegador.getCurrentUrl());
             System.out.println("Logado com sucesso");
         } catch (AssertionError e) {
@@ -124,11 +126,7 @@ public class CT02ResponderOnline {
         }
     }
     //Procura o questionario já parametrizado
-    public void procurarQuestionario(WebDriver navegador, WebDriverWait espera, Actions actions) throws InterruptedException {
-        String id = jsonObject.get("id").getAsString();
-        String titulo = jsonObject.get("tituloQuest").getAsString();
-        String descricao = jsonObject.get("descricao").getAsString();
-
+    public void procurarQuestionario(WebDriver navegador, WebDriverWait espera, Actions actions, String id, String tituloQuest, String descricao) throws InterruptedException {
         sleep(4000);
         //chega no campo do Responderonline
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"side-menu\"]/li[7]/a")));
@@ -144,7 +142,7 @@ public class CT02ResponderOnline {
 
         // Preenche título do questionário
         sleep(250);
-        navegador.findElement(By.name("titulo")).sendKeys(titulo);
+        navegador.findElement(By.name("titulo")).sendKeys(tituloQuest);
         actions.sendKeys(Keys.TAB).perform();
 
         // Preenche descrição do questionário
@@ -153,30 +151,27 @@ public class CT02ResponderOnline {
         navegador.findElement(By.name("descricao")).sendKeys(descricao);
 
         // Clicar no botão pesquisar
-        sleep(3000); // Ajustar o tempo conforme necessário
+        sleep(3000);
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("btn_buscar")));
         navegador.findElement(By.name("btn_buscar")).click();
-        sleep(5000); // Ajustar o tempo conforme necessário
+        sleep(5000);
 
-        // Forçar o click no responder questionário
-
-        /*sleep(250);
+        //Forçar o click no responder questionário
+        sleep(250);
         try {
             WebElement element = navegador.findElement(By.className("tdatagrid_cell"));
             if (element.getAttribute("class").contains("action")) {
                 element.click();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-         */
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        //validar que foi para a proxima tela pelo endereço
     }
-    public void responderQuestionario(){
-
-
-
-     /*   //começa o questionario
-        sleep(250);
+    //public void responderQuestionario(){
+    //começa o questionario
+     /*   sleep(250);
         for (int i = 0; i < 2; i++) {
             actions.sendKeys(Keys.TAB).perform();
         }
@@ -246,5 +241,5 @@ public class CT02ResponderOnline {
 
         //<span class="pin-number" name="randomPIN">271 0530</span>
         //xpath:  //*[@id="tab_bform_1905449524_0"]/div/div/div/div/div[1]/div[1]/p[2]/span
-    }
+    //}
 }
