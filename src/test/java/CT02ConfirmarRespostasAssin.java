@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.time.Duration;
 import static java.lang.Thread.sleep;
 
-public class CT02_4AlternativasVazio {
+public class CT02ConfirmarRespostasAssin {
     BufferedReader buffer;
     StringBuilder json;
     String linha;
@@ -69,7 +69,7 @@ public class CT02_4AlternativasVazio {
         String qtdAlternativas = jsonObject.get("qtdAlternativas").getAsString();
         String tema = jsonObject.get("tema").getAsString();
         String disciplina = jsonObject.get("disciplina").getAsString();
-        String resposta = jsonObject.get("resposta").getAsString();
+        String resposta = jsonObject.get("resposta2").getAsString();
 
         // Logar no site e chegar no menu chatGPT
         realizarLogin(navegador, espera, usuario, senha);
@@ -169,15 +169,30 @@ public class CT02_4AlternativasVazio {
         sleep(100);
         actions.sendKeys(Keys.ENTER);
 
+        //escolhas 1a
+        espera.until(d -> navegador.findElement(By.name("radio1")));
+        navegador.findElement(By.name("radio1")).click();
+        //2a
+        espera.until(d -> navegador.findElement(By.name("radio2")));
+        navegador.findElement(By.name("radio2")).click();
+        //3a
+        espera.until(d -> navegador.findElement(By.name("radio3")));
+        navegador.findElement(By.name("radio3")).click();
+        //4b
+        espera.until(d -> navegador.findElement(By.name("radio4")));
+        navegador.findElement(By.name("radio4")).click();
+
+        //confirma o questionario
         sleep(1000);
         espera.until(d -> navegador.findElement(By.name("btn_confirma")));
         navegador.findElement(By.name("btn_confirma")).click();
-        System.out.println("Erro pois mesmo sem alternativas selecionadas ele é criado!");
+
+        sleep(500);
         try {
             WebElement mensagemErro = navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[2]/div/div/span[2]"));
             String textoMensagemErro = mensagemErro.getText();
-            Assertions.assertEquals("Marque a(s) pergunta(s) para inclusão.", textoMensagemErro);
-            System.out.println("Erro na criação do questionario: Marque a(s) pergunta(s) para inclusão.");
+            Assertions.assertEquals("Questionário incluso.", textoMensagemErro);
+            System.out.println("Questionário incluso assincrono.");
         } catch (AssertionError e) {
             System.out.println(" ");
         }

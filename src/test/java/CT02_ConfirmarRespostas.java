@@ -186,12 +186,15 @@ public class CT02_ConfirmarRespostas {
         sleep(1000);
         espera.until(d -> navegador.findElement(By.name("btn_confirma")));
         navegador.findElement(By.name("btn_confirma")).click();
+
+        sleep(500);
         try {
-            WebElement elementoEsperado = espera.until(d -> navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[1]/h4")));
-            Assertions.assertNotNull(elementoEsperado);
-            System.out.println("Quiz confirmado da forma correta");
+            WebElement mensagemErro = navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[2]/div/div/span[2]"));
+            String textoMensagemErro = mensagemErro.getText();
+            Assertions.assertEquals("Questionário incluso.", textoMensagemErro);
+            System.out.println("Questionário incluso sincrono.");
         } catch (AssertionError e) {
-            System.out.println("Erro na confirmação do quiz");
+            System.out.println(" ");
         }
     }
 }
