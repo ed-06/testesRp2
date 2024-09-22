@@ -181,12 +181,9 @@ public class CT02_2RespostaVazio {
         sleep(1000);
         espera.until(d -> navegador.findElement(By.name("btn_confirma")));
         navegador.findElement(By.name("btn_confirma")).click();
-        try {
-            WebElement elementoEsperado = espera.until(d -> navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[1]/h4")));
-            Assertions.assertNotNull(elementoEsperado);
-            System.out.println("Quiz confirmado da forma correta");
-        } catch (AssertionError e) {
-            System.out.println("Erro na confirmação do quiz");
-        }
+        sleep(2000);
+        WebElement mensagemErro = navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[2]/div/div/span[2]"));
+        String textoMensagemErro = mensagemErro.getText();
+        Assertions.assertEquals("O campo Tempo da Resposta é obrigatório.", mensagemErro.getText());
     }
 }

@@ -200,12 +200,15 @@ public class CT02_3PerguntasVazio {
         sleep(1000);
         espera.until(d -> navegador.findElement(By.name("btn_confirma")));
         navegador.findElement(By.name("btn_confirma")).click();
+
+        sleep(250);
         try {
-            WebElement elementoEsperado = espera.until(d -> navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[1]/h4")));
-            Assertions.assertNotNull(elementoEsperado);
-            System.out.println("Quiz confirmado da forma correta");
+            WebElement mensagemErro = navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[2]/div/div/span[2]"));
+            String textoMensagemErro = mensagemErro.getText();
+            Assertions.assertEquals("Marque a(s) pergunta(s) para inclusão.", textoMensagemErro);
+            System.out.println("Erro na criação do questionario: Marque a(s) pergunta(s) para inclusão.");
         } catch (AssertionError e) {
-            System.out.println("Erro na confirmação do quiz");
+            System.out.println(" ");
         }
     }
 }

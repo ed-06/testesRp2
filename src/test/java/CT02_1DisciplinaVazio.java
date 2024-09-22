@@ -77,13 +77,6 @@ public class CT02_1DisciplinaVazio {
         criarQuestionario(navegador, espera, actions, nomeQuest, qtdPerguntas, qtdAlternativas, tema);
         //responder as questionario
         responderQuestionario(navegador, espera, actions, disciplina, resposta);
-
-        sleep(2000);
-        WebElement mensagemErro = navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[2]/div/div/span[2]"));
-        String textoMensagemErro = mensagemErro.getText();
-        Assertions.assertEquals("O campo Disciplina é obrigatório.", mensagemErro.getText());
-
-
     }
     public void realizarLogin(WebDriver navegador, WebDriverWait espera, String usuario, String senha) throws InterruptedException {
         navegador.get(jsonObject.get("url").getAsString());
@@ -190,5 +183,10 @@ public class CT02_1DisciplinaVazio {
         sleep(1000);
         espera.until(d -> navegador.findElement(By.name("btn_confirma")));
         navegador.findElement(By.name("btn_confirma")).click();
+
+        sleep(2000);
+        WebElement mensagemErro = navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[2]/div/div/span[2]"));
+        String textoMensagemErro = mensagemErro.getText();
+        Assertions.assertEquals("O campo Disciplina é obrigatório.", mensagemErro.getText());
     }
 }

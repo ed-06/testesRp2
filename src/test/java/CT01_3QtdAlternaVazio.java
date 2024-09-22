@@ -75,9 +75,7 @@ public class CT01_3QtdAlternaVazio {
         realizarLogin(navegador, espera, usuario, senha);
         //criar questionario com gpt
         criarQuestionario(navegador, espera, actions, nomeQuest, qtdPerguntas, qtdAlternativas, tema);
-        //responder as questionario
-        responderQuestionario(navegador, espera, actions, disciplina, resposta);
-
+        //responder as questionarioresponderQuestionario(navegador, espera, actions, disciplina, resposta);
     }
     public void realizarLogin(WebDriver navegador, WebDriverWait espera, String usuario, String senha) throws InterruptedException {
         navegador.get(jsonObject.get("url").getAsString());
@@ -137,61 +135,10 @@ public class CT01_3QtdAlternaVazio {
         espera.until(d -> navegador.findElement(By.name("btn_elabore_perguntas")));
         navegador.findElement(By.name("btn_elabore_perguntas")).click();
 
-        //proximo
         sleep(4000);
-        espera.until(d -> navegador.findElement(By.name("btn_próximo")));
-        navegador.findElement(By.name("btn_próximo")).click();
-
-        sleep(500);
-        //Verefica a criação do quiz
-        try {
-            Assertions.assertEquals("http://200.132.136.72/AIQuiz/index.php?class=ResponderListOnLine&previous_class=LoginForm",
-                    navegador.getCurrentUrl());
-            System.out.println("Quiz criado da forma correta");
-        } catch (AssertionError e) {
-            System.out.println("Erro na criação do quiz");
-        }
-    }
-    public void responderQuestionario(WebDriver navegador, WebDriverWait espera, Actions actions, String disciplina, String resposta) throws InterruptedException {
-        //disciplina
-        espera.until(d -> navegador.findElement(By.name("disciplina")));
-        navegador.findElement(By.name("disciplina")).click();
-        sleep(100);
-        actions.sendKeys(disciplina).perform();
-        sleep(100);
-        actions.sendKeys(Keys.ENTER);
-
-        //resposta
-        espera.until(d -> navegador.findElement(By.name("comunicacao")));
-        navegador.findElement(By.name("comunicacao")).click();
-        sleep(1000);
-        actions.sendKeys(resposta).perform();
-        sleep(100);
-        actions.sendKeys(Keys.ENTER);
-
-        //escolhas 1a
-        espera.until(d -> navegador.findElement(By.name("radio1")));
-        navegador.findElement(By.name("radio1")).click();
-        //2a
-        espera.until(d -> navegador.findElement(By.name("radio2")));
-        navegador.findElement(By.name("radio2")).click();
-        //3a
-        espera.until(d -> navegador.findElement(By.name("radio3")));
-        navegador.findElement(By.name("radio3")).click();
-        //4b
-        espera.until(d -> navegador.findElement(By.name("radio4")));
-        navegador.findElement(By.name("radio4")).click();
-
-        //confirma o questionario
-        sleep(1000);
-        espera.until(d -> navegador.findElement(By.name("btn_confirma")));
-        navegador.findElement(By.name("btn_confirma")).click();
-        try {
-            WebElement elementoEsperado = espera.until(d -> navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[1]/h4")));
-            Assertions.assertNotNull(elementoEsperado);
-            System.out.println("Quiz confirmado da forma correta");
-        } catch (AssertionError e) {
-            System.out.println("Erro na confirmação do quiz, quantidade de alternativas vazio");
-        }
+        WebElement mensagemErro = navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[2]"));
+        String textoMensagemErro = mensagemErro.getText();
+        Assertions.assertEquals("O campo Quantidade de Alternativas é obrigatório.", textoMensagemErro);
+        System.out.println("O campo Quantidade de Alternativas é obrigatório.");
     }
 }

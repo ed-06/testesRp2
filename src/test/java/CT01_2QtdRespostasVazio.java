@@ -136,19 +136,10 @@ public class CT01_2QtdRespostasVazio {
         espera.until(d -> navegador.findElement(By.name("btn_elabore_perguntas")));
         navegador.findElement(By.name("btn_elabore_perguntas")).click();
 
-        //proximo
         sleep(4000);
-        espera.until(d -> navegador.findElement(By.name("btn_próximo")));
-        navegador.findElement(By.name("btn_próximo")).click();
-
-        sleep(500);
-        //Verefica a criação do quiz
-        try {
-            Assertions.assertEquals("http://200.132.136.72/AIQuiz/index.php?class=ResponderListOnLine&previous_class=LoginForm",
-                    navegador.getCurrentUrl());
-            System.out.println("Quiz criado da forma correta");
-        } catch (AssertionError e) {
-            System.out.println("Erro na criação do quiz, quantidade de respostas vazio");
-        }
+        WebElement mensagemErro = navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[2]"));
+        String textoMensagemErro = mensagemErro.getText();
+        Assertions.assertEquals("O campo Quantidade de Perguntas é obrigatório.", textoMensagemErro);
+        System.out.println("O campo Quantidade de Perguntas é obrigatório.");
     }
 }
