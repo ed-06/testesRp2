@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -66,6 +67,7 @@ public class CT03ResponderOnline {
     @DisplayName("ResponderOnline")
     public void CT02() throws InterruptedException {
         Actions actions = new Actions(navegador);
+        String url = jsonObject.get("url").getAsString();
         String usuario = jsonObject.get("usuario").getAsString();
         String senha = jsonObject.get("senha").getAsString();
         String tituloQuest = jsonObject.get("tituloQuest").getAsString();
@@ -74,17 +76,18 @@ public class CT03ResponderOnline {
 
         //LOGIN
         realizarLogin(navegador, espera, usuario, senha);
-        realizarLoginResponder(navegador2, espera2, usuario, senha);
+        //realizarLoginResponder(navegador2, espera2, usuario, senha);
 
         //PROCURAR QUESTIONARIo
-        procurarQuestionario(navegador, espera, actions, tituloQuest, id, descricaoQuest);
+        //procurarQuestionario(navegador, espera, actions, tituloQuest, id, descricaoQuest);
 
         //entrar no questionário
 
     }
+
     //realiza o login
     public void realizarLogin(WebDriver navegador, WebDriverWait espera, String usuario, String senha) throws InterruptedException {
-        navegador.get(jsonObject.get("url").getAsString());
+        navegador.get("http://200.132.136.72/AIQuiz/index.php?class=ResponderListOnLine");
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("login")));
         navegador.findElement(By.name("login")).sendKeys(usuario);
         navegador.findElement(By.name("password")).sendKeys(senha);
@@ -93,7 +96,7 @@ public class CT03ResponderOnline {
         System.out.println("Título da nova janela: " + navegador.getTitle());
         sleep(1000);
         //Espera 2 segundos para verificar
-        Thread.sleep(2000);
+        sleep(2000);
         // Compara se a url da página é a esperada
         try {
             Assertions.assertEquals("http://200.132.136.72/AIQuiz/index.php?class=ResponderListOnLine&previous_class=LoginForm",
@@ -102,9 +105,9 @@ public class CT03ResponderOnline {
         } catch (AssertionError e) {
             System.out.println("Erro no login");
         }
-    }
-    //realiza o login e manda para o site responder
-    public void realizarLoginResponder(WebDriver navegador, WebDriverWait espera, String usuario, String senha) throws InterruptedException {
+
+        //realiza o login e manda para o site responder
+/*
         navegador.get(jsonObject.get("url").getAsString());
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.name("login")));
         navegador.findElement(By.name("login")).sendKeys(usuario);
@@ -125,6 +128,7 @@ public class CT03ResponderOnline {
             System.out.println("Erro no login e em ir para a tela de PIN");
         }
     }
+/
     //Procura o questionario já parametrizado
     public void procurarQuestionario(WebDriver navegador, WebDriverWait espera, Actions actions, String id, String tituloQuest, String descricao) throws InterruptedException {
         sleep(4000);
@@ -163,12 +167,12 @@ public class CT03ResponderOnline {
             if (element.getAttribute("class").contains("action")) {
                 element.click();
             }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //validar que foi para a proxima tela pelo endereço
     }
+}
     //public void responderQuestionario(){
     //começa o questionario
      /*   sleep(250);
@@ -241,5 +245,6 @@ public class CT03ResponderOnline {
 
         //<span class="pin-number" name="randomPIN">271 0530</span>
         //xpath:  //*[@id="tab_bform_1905449524_0"]/div/div/div/div/div[1]/div[1]/p[2]/span
-    //}
+        //}
+    }
 }

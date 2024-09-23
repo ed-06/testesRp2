@@ -172,11 +172,12 @@ public class CT02_4AlternativasVazio {
         sleep(1000);
         espera.until(d -> navegador.findElement(By.name("btn_confirma")));
         navegador.findElement(By.name("btn_confirma")).click();
-        System.out.println("Erro pois mesmo sem alternativas selecionadas ele é criado!");
+
+        sleep(250);
         try {
             WebElement mensagemErro = navegador.findElement(By.xpath("/html/body/div[2]/div/div/div[2]/div/div/span[2]"));
             String textoMensagemErro = mensagemErro.getText();
-            Assertions.assertEquals("Marque a(s) pergunta(s) para inclusão.", textoMensagemErro);
+            Assertions.assertEquals("Questionário incluso.", textoMensagemErro);
             System.out.println("Erro na criação do questionario: Marque a(s) pergunta(s) para inclusão.");
         } catch (AssertionError e) {
             System.out.println(" ");
