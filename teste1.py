@@ -18,7 +18,7 @@ with open(json_path) as f:
 
 urlPlataforma = credenciais["url"]
 usuario = credenciais["usuario"]
-senha = credenciais["senha"]
+senhha = credenciais["senha"]
 
 # chromedriver config
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
