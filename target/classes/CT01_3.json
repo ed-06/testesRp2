@@ -1,11 +1,9 @@
 {
-  "url": "http://200.132.136.72/AIQuiz/index.php?class=ResponderListOnLine",
+  "url": "http://200.132.136.72/AIQuiz2/index.php?class=ChatGPTForm",
   "usuario": "grupo6",
-  "senha": "admin",
-  "nomeQuest": "questionario12430",
+  "senha": "A#abc123",
+  "nomeQuest": "questionario124305",
   "qtdPerguntas": 4,
   "qtdAlternativas": " ",
-  "tema": "Futebol",
-  "disciplina": "R",
-  "resposta": "S"
+  "tema": "Historia do futebol e suas implicações na cultura mundial"
 }

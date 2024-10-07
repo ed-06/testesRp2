@@ -4,9 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2af625a-cc9f-47b7-b72a-3db11945abd8" name="Changes" comment="">
+    <list default="true" id="c60e29e0-9352-43d0-9c6e-6f226d962014" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/testesRp2.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teste1.py" beforeDir="false" afterPath="$PROJECT_DIR$/teste1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/CT01_1.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CT01_1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/CT01_2.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CT01_2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/CT01_3.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CT01_3.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/CT01_4.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CT01_4.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DadosQuestComChatGpt.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DadosResponderOnline.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT01QuestComChatGpt.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT01_1NomeQuestVazio.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT01_2QtdRespostasVazio.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT01_3QtdAlternaVazio.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT01_4TemaQuestVazio.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT01_5NaoElaborarPerguntas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT02ConfirmarRespostasAssin.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT02_1DisciplinaVazio.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT02_2RespostaVazio.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT02_3PerguntasVazio.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT02_4AlternativasVazio.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT02_ConfirmarRespostas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/CT03ResponderOnline.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/teste1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/teste1.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,93 +43,80 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;ed-06&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "ed-06"
   }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/ed-06/testesRp2.git&quot;,
-    &quot;accountId&quot;: &quot;dc7afb65-3d58-4a98-8e07-a3777fc7ce73&quot;
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ed-06/testesRp2.git",
+    "accountId": "f85fdc44-b2b4-441b-82f7-ee698910f96b"
   }
-}</component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
-}</component>
-  <component name="ProjectId" id="2mWo5LsTU6QgiH67GaeK9YmcjIh" />
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2n5bmuPUMxhv9gZ4jZcC6AzlDIu" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.teste1.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ed/Documentos/GitHub/testesRp2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.CT01_1NomeQuestVazio.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/GitHub/testesRp2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
+}]]></component>
+  <component name="RunManager">
+    <configuration name="CT01_1NomeQuestVazio" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestesRP2java" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CT01_1NomeQuestVazio" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CT01_1NomeQuestVazio" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.22855.92" />
-        <option value="bundled-python-sdk-b068d85d1acf-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.22855.92" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d2af625a-cc9f-47b7-b72a-3db11945abd8" name="Changes" comment="" />
-      <created>1727201518711</created>
+      <changelist id="c60e29e0-9352-43d0-9c6e-6f226d962014" name="Changes" comment="" />
+      <created>1728266047530</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1727201518711</updated>
-      <workItem from="1727201520507" duration="45000" />
-      <workItem from="1727201576830" duration="771000" />
-      <workItem from="1727299358458" duration="118000" />
+      <updated>1728266047530</updated>
+      <workItem from="1728266048940" duration="653000" />
     </task>
-    <task id="LOCAL-00001" summary="Tirei todas essas bombas para um pasta paralale e usar python para os testes agora">
-      <option name="closed" value="true" />
-      <created>1727201851290</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1727201851290</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Funcionando agora">
-      <option name="closed" value="true" />
-      <created>1727202319176</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1727202319176</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Tirei todas essas bombas para um pasta paralale e usar python para os testes agora" />
-    <MESSAGE value="Funcionando agora" />
-    <option name="LAST_COMMIT_MESSAGE" value="Funcionando agora" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/testesRp2$teste1.coverage" NAME="teste1 Coverage Results" MODIFIED="1727202177160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
